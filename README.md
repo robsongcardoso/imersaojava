@@ -1,18 +1,18 @@
-## Getting Started
+Imersão Java Alura<br>
+Aula 1:<br>
+Uso da API do site https://www.imdb.com com o objetivo de listar os filmes melhor rankeados na aplicação. <br>
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Links alternativos da API:
+<br>
+https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json
+<br>
+https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopTVs.json
+<br>
+https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/MostPopularMovies.json
+<br>
+https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/MostPopularTVs.json
 
-## Folder Structure
 
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+<div align="center">
+  <img source="https://user-images.githubusercontent.com/17829051/228121400-46bbae73-04ed-42d8-89f1-627e4e2ab4a9.png" />
+</div>
