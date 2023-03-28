@@ -4,17 +4,6 @@
    <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=RED&style=for-the-badge"/>
 </p>
 
-### Tópicos: 
-
-:small_blue_diamond: [Descrição do projeto](#descrição-do-projeto)
-
-:small_blue_diamond: [Funcionalidades](#funcionalidades)
-
-:small_blue_diamond: [Layout](#layout-dash)
-
-:small_blue_diamond: [Técnicas e tecnologias exercitadas](#técnicas-e-tecnologias-exercitadas-books)
-
-
 ## Descrição do projeto: 
 
 <p align="justify">
@@ -24,10 +13,15 @@
 
 ## Funcionalidades:
 :heavy_check_mark: Imprimir os nomes dos filmes mais avaliados da IMDb.
+
 :heavy_check_mark: Imprimir a Url que leva ao poster de cada filme  
+
 :heavy_check_mark: Imprimir grafico de barras com a representação visual relativa a porcetagem que os filmes receberam em sua classificação.
+
 :heavy_check_mark: Imprimir a classificação dos filmes em porcentagem.
+
 :heavy_check_mark: Imprimir um emoji Triste, Neutro e Sorrindo de acordo com a classificação que o filme recebeu.
+
 :heavy_check_mark: Imprimir o número de estrelas que os filmes foram classificados.
 
 ## Resultado: 
