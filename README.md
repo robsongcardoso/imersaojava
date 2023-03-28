@@ -32,9 +32,7 @@
 
 ## Resultado: 
 
-<div align="center">
 ![image](https://user-images.githubusercontent.com/17829051/228121400-46bbae73-04ed-42d8-89f1-627e4e2ab4a9.png)
-</div>
 
 ## Tecnologias utilizadas :books:
 
