@@ -1,53 +1,29 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
-import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws Exception {
         // fazer uma conexão HTTP e buscar os top 250 filmes
-        //String url = System.getenv("API_URL");
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/MostPopularMovies.json";
-        URI endereco = URI.create(url);
-        var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-        String body = response.body();
-
-        // extrair só os dados que interessam (titulo, poster, classificação)
-        var parser = new JsonParser();
-        List<Map<String, String>> listaDeFilmes = parser.parse(body);
-
-        var diretorio = new File("figurinhas/");
-        diretorio.mkdir();
+        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
+        var http = new ClienteHttp();
+        String json =  http.buscaDados(url);
 
         // exibir e manipular os dados
-        var geradora = new GeradoraDeFigurinhas();
+        ExtratorDeConteudo extrator = new ExtratorDeConteudoDoIMDB();
+        //ExtratorDeConteudo extrator = new ExtratorDeConteudoDaNasa();
+
+        List<Conteudo> conteudos = extrator.extraiConteudos(json);
+
         for (int index = 0; index < 3; index++) {
-            var filme = listaDeFilmes.get(index);
+            Conteudo  conteudo = conteudos.get(index);
 
-            //for (Map<String, String> filme : listaDeFilmes) {
-                System.out.println("\033[1;34mTítulo:\033[0m \033[1;31m" + filme.get("title") + "\033[0m");
-                System.out.println("\uD83C\uDF10 " + filme.get("image"));
-    
-                
-                //geradora.cria(inputStream, titulo, );
-                
-                //Imprime no console a imagem em formato base64
-                //String link = geradora.cria(inputStream);
-               // System.out.println("Link para visualização: " + link);
-
-            
+                System.out.println("\033[1;34mTítulo:\033[0m \033[1;31m" + conteudo.getTitulo() + "\033[0m");
+                            
                 // calcula a porcentagem correspondente da classificação
-                String classificacao = filme.get("imDbRating");
-                double porcentagem = Double.parseDouble(classificacao) * 10;
+                double porcentagem = Double.parseDouble(conteudo.getClassificacao()) * 10;
                 int numBarras = (int) Math.round(porcentagem / 10.0);
                 String barra = "\033[38;2;255;255;0m█\033[0m";
                 String barraVazia = "░";
@@ -76,15 +52,17 @@ public class App {
                     imgrank = new FileInputStream(new File("imgrank/ruim.png"));
                     porcentagemFormatada += " \uD83D\uDE41"; // emoji triste (ruim)
                 }
-                System.out.println(frase_meme + porcentagemFormatada);
-                //
-                String urlImagem = filme.get("image");
-                String titulo = filme.get("title");   
-                InputStream inputStream = new URL(urlImagem).openStream();
+                System.out.println(frase_meme);
+                System.out.println(porcentagemFormatada);
+                
+                var geradora = new GeradoraDeFigurinhas();
+                
+                String titulo = conteudo.getTitulo();   
+                InputStream inputStream = new URL(conteudo.getUrlImagem()).openStream();
                 geradora.cria(inputStream, titulo, frase_meme, imgrank);
             
                 // calcular a classificação arredondada
-                int classificacao_star = (int) Math.round(Double.parseDouble(filme.get("imDbRating")));
+                int classificacao_star = (int) Math.round(Double.parseDouble(conteudo.getClassificacao()));
             
                 // exibir as estrelas correspondentes
                 //System.out.print("\033[1;33mClassificação:\033[0m ");
@@ -96,9 +74,6 @@ public class App {
                     }
                 }
                 System.out.println("\n");
-            //}
-
-
         }
         
         

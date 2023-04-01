@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.text.Normalizer;
-import java.util.Base64;
+
 
 import javax.imageio.ImageIO;
 
@@ -71,18 +71,12 @@ public class GeradoraDeFigurinhas {
                 .toLowerCase();
 
         // salvar a imagem na pasta figurinhas
-        File pasta = new File("figurinhas");
+        File pasta = new File("saida");
         pasta.mkdir();
         File arquivo = new File(pasta, titulo + ".png");
         ImageIO.write(novaImagem, "png", arquivo);
-
-        // codificar a imagem em base64
-        String imagemBase64 = Base64.getEncoder().encodeToString(imagemBytes);
-
-        // gerar o link para visualização da imagem
-        String link = "data:image/png;base64," + imagemBase64;
-
-        return link;
+        return frase_meme;
+       
     }
 
 }
