@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
@@ -36,11 +37,8 @@ public class App {
                 System.out.println("\033[1;34mTítulo:\033[0m \033[1;31m" + filme.get("title") + "\033[0m");
                 System.out.println("\uD83C\uDF10 " + filme.get("image"));
     
-                String urlImagem = filme.get("image");
-                String titulo = filme.get("title");
-    
-                InputStream inputStream = new URL(urlImagem).openStream();
-                geradora.cria(inputStream, titulo);
+                
+                //geradora.cria(inputStream, titulo, );
                 
                 //Imprime no console a imagem em formato base64
                 //String link = geradora.cria(inputStream);
@@ -63,15 +61,27 @@ public class App {
             
                 // exibe a classificação com a barra degradê e emojis correspondentes
                 String porcentagemFormatada = String.format("%s %s%%", barraDegrade.toString(), Math.round(porcentagem));
-            
+                String frase_meme = "";
+                InputStream imgrank;
                 if (porcentagem >= 70) {
+                    frase_meme = "TOPZERA";
+                    imgrank = new FileInputStream(new File("imgrank/otimo.png"));
                     porcentagemFormatada += " \uD83D\uDE00"; // emoji sorrindo (ótimo)
                 } else if (porcentagem >= 40) {
+                    frase_meme = "VALE PELA PIPOCA";
+                    imgrank = new FileInputStream(new File("imgrank/bom.png"));
                     porcentagemFormatada += " \uD83D\uDE42"; // emoji neutro (bom)
                 } else {
+                    frase_meme = "DORMI ASSISTINDO";
+                    imgrank = new FileInputStream(new File("imgrank/ruim.png"));
                     porcentagemFormatada += " \uD83D\uDE41"; // emoji triste (ruim)
                 }
-                System.out.println(porcentagemFormatada);
+                System.out.println(frase_meme + porcentagemFormatada);
+                //
+                String urlImagem = filme.get("image");
+                String titulo = filme.get("title");   
+                InputStream inputStream = new URL(urlImagem).openStream();
+                geradora.cria(inputStream, titulo, frase_meme, imgrank);
             
                 // calcular a classificação arredondada
                 int classificacao_star = (int) Math.round(Double.parseDouble(filme.get("imDbRating")));
