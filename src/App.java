@@ -7,20 +7,14 @@ import java.util.Random;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        // fazer uma conexão HTTP e buscar os top 250 filmes
-        // NASA
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/NASA-APOD.json";
+        // API
+        API api = API.NASA;
+        String url = api.getUrl();
+        ExtratorDeConteudo extrator = api.getExtrator();
 
-        // IMDB
-        // String url
-        // ="https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
+        //Cliente HTTP
         var http = new ClienteHttp();
         String json = http.buscaDados(url);
-
-        // exibir e manipular os dados
-
-        // ExtratorDeConteudo extrator = new ExtratorDeConteudoDoIMDB();
-        ExtratorDeConteudo extrator = new ExtratorDeConteudoDaNasa();
 
         List<Conteudo> conteudos = extrator.extraiConteudos(json);
 
@@ -40,15 +34,15 @@ public class App {
                 String nomeImagem = "";
                 switch (indexImagem) { // define o nome da imagem de acordo com o índice gerado
                     case 0:
-                        frase_meme = "DORMI ASSISTINDO";
+                        frase_meme = "VOLTO LOGO";
                         nomeImagem = "imgrank/ruim.png";
                         break;
                     case 1:
-                        frase_meme = "TOPZERA";
+                        frase_meme = "PERDIDOS NO ESPAÇO";
                         nomeImagem = "imgrank/otimo.png";
                         break;
                     case 2:
-                        frase_meme = "VALE PELA PIPOCA";
+                        frase_meme = "AVE MIZERA";
                         nomeImagem = "imgrank/bom.png";
                         break;
                 }

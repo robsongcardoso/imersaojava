@@ -8,7 +8,7 @@ public class ExtratorDeConteudoDaNasa implements ExtratorDeConteudo {
         // extrair só os dados que interessam (titulo, poster, classificação)
         var parser = new JsonParser();
         List<Map<String, String>> listaDeAtributos = parser.parse(json);
-
+        // -> = Lambda
         return listaDeAtributos.stream()
             .map(atributos -> new Conteudo(atributos.get("title"),atributos.get("url"), atributos.get("Rank")))
             .toList();

@@ -19,7 +19,7 @@ public class ClienteHttp {
         return body;
 
         } catch (IOException | InterruptedException ex) {
-            throw new RuntimeException(ex);
+            throw new ClientHttpException("\033[1;34mMensagem:\033[0m \033[1;31m" + "Erro ao consultar a URL" + "\033[0m");
         }
         
         
