@@ -9,7 +9,9 @@ public class ExtratorDeConteudoDoIMDB implements ExtratorDeConteudo {
          List<Map<String, String>> listaDeAtributos = parser.parse(json);
 
          return listaDeAtributos.stream()
-         .map(atributos -> new Conteudo(atributos.get("title"), atributos.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg"), atributos.get("imDbRating")))
+         .map(atributos -> new Conteudo(atributos.get("title"),
+                                        atributos.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg"), 
+                                        atributos.get("imDbRating")))
          .toList();
  
     }

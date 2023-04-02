@@ -3,27 +3,61 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
+import java.util.Random;
 
 public class App {
     public static void main(String[] args) throws Exception {
         // fazer uma conexão HTTP e buscar os top 250 filmes
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
+        // NASA
+        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/NASA-APOD.json";
+
+        // IMDB
+        // String url
+        // ="https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
         var http = new ClienteHttp();
-        String json =  http.buscaDados(url);
+        String json = http.buscaDados(url);
 
         // exibir e manipular os dados
-        ExtratorDeConteudo extrator = new ExtratorDeConteudoDoIMDB();
-        //ExtratorDeConteudo extrator = new ExtratorDeConteudoDaNasa();
+
+        // ExtratorDeConteudo extrator = new ExtratorDeConteudoDoIMDB();
+        ExtratorDeConteudo extrator = new ExtratorDeConteudoDaNasa();
 
         List<Conteudo> conteudos = extrator.extraiConteudos(json);
 
         for (int index = 0; index < 3; index++) {
-            Conteudo  conteudo = conteudos.get(index);
+            Conteudo conteudo = conteudos.get(index);
 
-                System.out.println("\033[1;34mTítulo:\033[0m \033[1;31m" + conteudo.getTitulo() + "\033[0m");
-                            
+            System.out.println("\033[1;34mTítulo:\033[0m \033[1;31m" + conteudo.titulo() + "\033[0m");
+
+            String frase_meme = "";
+            InputStream imgrank = null;
+            double porcentagem = 0;
+
+            if (conteudo.classificacao() == null) {
+                int numImagens = 3; // número de imagens disponíveis
+                Random random = new Random();
+                int indexImagem = random.nextInt(numImagens); // gera um índice aleatório
+                String nomeImagem = "";
+                switch (indexImagem) { // define o nome da imagem de acordo com o índice gerado
+                    case 0:
+                        frase_meme = "DORMI ASSISTINDO";
+                        nomeImagem = "imgrank/ruim.png";
+                        break;
+                    case 1:
+                        frase_meme = "TOPZERA";
+                        nomeImagem = "imgrank/otimo.png";
+                        break;
+                    case 2:
+                        frase_meme = "VALE PELA PIPOCA";
+                        nomeImagem = "imgrank/bom.png";
+                        break;
+                }
+                System.out.println("\033[1;34mPassei aqui classificação nula:\033[0m \033[1;31m");
+                imgrank = new FileInputStream(new File(nomeImagem));
+            } else {
                 // calcula a porcentagem correspondente da classificação
-                double porcentagem = Double.parseDouble(conteudo.getClassificacao()) * 10;
+                System.out.println("\033[1;34mPassei aqui no else:\033[0m \033[1;31m");
+                porcentagem = Double.parseDouble(conteudo.classificacao()) * 10;
                 int numBarras = (int) Math.round(porcentagem / 10.0);
                 String barra = "\033[38;2;255;255;0m█\033[0m";
                 String barraVazia = "░";
@@ -34,11 +68,11 @@ public class App {
                 for (int i = numBarras + 1; i <= 10; i++) {
                     barraDegrade.append(barraVazia);
                 }
-            
+
                 // exibe a classificação com a barra degradê e emojis correspondentes
-                String porcentagemFormatada = String.format("%s %s%%", barraDegrade.toString(), Math.round(porcentagem));
-                String frase_meme = "";
-                InputStream imgrank;
+                String porcentagemFormatada = String.format("%s %s%%", barraDegrade.toString(),
+                        Math.round(porcentagem));
+
                 if (porcentagem >= 70) {
                     frase_meme = "TOPZERA";
                     imgrank = new FileInputStream(new File("imgrank/otimo.png"));
@@ -54,18 +88,11 @@ public class App {
                 }
                 System.out.println(frase_meme);
                 System.out.println(porcentagemFormatada);
-                
-                var geradora = new GeradoraDeFigurinhas();
-                
-                String titulo = conteudo.getTitulo();   
-                InputStream inputStream = new URL(conteudo.getUrlImagem()).openStream();
-                geradora.cria(inputStream, titulo, frase_meme, imgrank);
-            
+
                 // calcular a classificação arredondada
-                int classificacao_star = (int) Math.round(Double.parseDouble(conteudo.getClassificacao()));
-            
+                int classificacao_star = (int) Math.round(Double.parseDouble(conteudo.classificacao()));
+
                 // exibir as estrelas correspondentes
-                //System.out.print("\033[1;33mClassificação:\033[0m ");
                 for (int i = 1; i <= 10; i++) {
                     if (i <= classificacao_star) {
                         System.out.print("\033[38;2;255;255;0m★\033[0m ");
@@ -73,9 +100,15 @@ public class App {
                         System.out.print("☆ ");
                     }
                 }
-                System.out.println("\n");
+
+            }
+            var geradora = new GeradoraDeFigurinhas();
+            String titulo = conteudo.titulo();
+            InputStream inputStream = new URL(conteudo.urlImagem()).openStream();
+            geradora.cria(inputStream, titulo, frase_meme, imgrank);
+
+            System.out.println("\n");
         }
-        
-        
+
     }
 }
