@@ -33,3 +33,9 @@
 - Java
 - Visual Studio Code
 - Consumo de API
+
+## Conexão com MongoDB ##
+MongoDB Atlas: https://cloud.mongodb.com/
+Adicionar o driver de conexão com o servidor do MongoDB
+Caminho do arquivo: linguagens-api\src\main\resources\application.properties
+Conteudo do arquivo: spring.data.mongodb.uri=mongodb+srv://<usuario>:<senha>@cluster0.fnocyij.mongodb.net/<nome_banco_de_dados>?retryWrites=true&w=majority
