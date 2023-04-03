@@ -8,7 +8,7 @@ import java.util.Random;
 public class App {
     public static void main(String[] args) throws Exception {
         // API
-        API api = API.NASA;
+        API api = API.IMDB_TOP_MOVIES;
         String url = api.getUrl();
         ExtratorDeConteudo extrator = api.getExtrator();
 
